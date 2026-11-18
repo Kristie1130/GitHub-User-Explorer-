@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub user explorer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+ <main class="container" >
+ <h1>GitHub User Explorer</h1> 
+ <p>Search Github use</p>
+ <form id="searchForm">
+    <input
+    type="text"
+    id="username"
+    placeholder="Enter your GitHub Username"
+    required>
+    <button type="submit">Search</button>
+ </form>
+<p id="loading" hidden>Loading...</p> 
+<p id="errorMessage"></p>
+<section id="profile" hidden>
+    <img id="avatar" src="" alt="Github User Avatar">
+    <h2 id="name"></h2>
+    <p id="bio"></p>
+    <div class="stats">
+        <p>Repositories:<span id="repos"></span></p>
+        <P>Followers:<span id="followers"></span></P>
+        <P>Following:<span id="following"></span></P>
+    </div>
+    <h3>Recently Updated Repositories</h3>
+    <ul id="repoList"></ul>
+
+</section>
+</main>
+</body>
+</html>

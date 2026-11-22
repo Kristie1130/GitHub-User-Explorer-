@@ -1,67 +1,184 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    color: #333;
-    padding: 20px;
+    background: black;
+    min-height: 100vh;
+    padding: 60px 20px;
+    color: #49303f;
 }
+
+
 .container {
-    max-width: 700px;
-    margin: 40px auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-h1 {
+    width: 200%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 45px 40px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 15px 45px rgba(104, 48, 77, 0.12);
     text-align: center;
-    color: #24292f;
-    margin-bottom: 10px;
+    
+}
+
+
+h1 {
+    font-size: 32px;
+    color: #743c59;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
 }
 
 .container > p {
-    text-align: center;
-    margin-bottom: 20px;
-}
-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    font-size: 15px;
+    color: #a17d91;
+    margin-bottom: 35px;
 }
 
-input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
+
+#searchForm {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 25px;
 }
+
+/* Input */
+#username {
+    flex: 1;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #ead5df;
+    border-radius: 12px;
+    background: #fff9fb;
+    font-size: 14px;
+    outline: none;
+    color: #49303f;
+}
+
+#username:focus {
+    border-color: #b66d91;
+}
+
 
 button {
-    padding: 12px 20px;
-    background-color: #24292f;
-    color: white;
+    padding: 15px 25px;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
+    background: #884d6b;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
-}form {
-    display: flex;
-    gap: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #66344f;
+}
+
+/* Loading */
+#loading {
+    color: #884d6b;
+    margin: 20px;
+}
+
+
+#errorMessage {
+    color: #d45c7b;
+    margin: 15px 0;
+}
+
+
+#profile {
+    margin-top: 35px;
+    padding: 30px 20px;
+    background: #fff6f9;
+    border: 1px solid #f1dce6;
+    border-radius: 18px;
+}
+
+/* Avatar */
+#avatar {
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 5px 18px rgba(104, 48, 77, 0.15);
+    margin-bottom: 18px;
+}
+
+/* Name */
+#name {
+    font-size: 25px;
+    color: #743c59;
     margin-bottom: 20px;
 }
 
-input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
+/* Repository list */
+#repoList {
+    margin-top: 25px;
+    text-align: left;
 }
 
-button {
-    padding: 12px 20px;
-    background-color: #24292f;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+#repoList li {
+    list-style: none;
+    padding: 18px;
+    margin-bottom: 12px;
+    background: white;
+    border: 1px solid #f0dce5;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+#repoList li:hover {
+    background: #fff0f5;
+    border-color: #d9a7bd;
+}
+
+/* Repository links */
+#repoList a {
+    color: #884d6b;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#repoList a:hover {
+    color: #b45c83;
+}
+
+/* Hidden elements */
+[hidden] {
+    display: none !important;
+}
+
+/* Mobile screen */
+@media (max-width: 500px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .container {
+        padding: 30px 18px;
+        margin: 15px auto;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    #searchForm {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
 }

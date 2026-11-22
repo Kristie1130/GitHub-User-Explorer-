@@ -1,3 +1,4 @@
+
 const searchForm = document.getElementById("searchForm");
 const usernameInput = document.getElementById("username");
 const loading = document.getElementById("loading");
@@ -5,57 +6,72 @@ const errorMessage = document.getElementById("errorMessage");
 const profile = document.getElementById("profile");
 const avatar = document.getElementById("avatar");
 const name = document.getElementById("name");
-const bio = document.getElementById("bio");
-
-const repos = document.getElementById("repos");
-const followers = document.getElementById("followers");
-const following = document.getElementById("following");
 const repoList = document.getElementById("repoList");
 
 async function searchUser(username) {
     try {
+        loading.hidden = false;
+        errorMessage.textContent = "";
+        profile.hidden = true;
 
-    loading.hidden = false;
-    errorMessage.textContent = "";
-    profile.hidden = true;
+        // Fetch any GitHub username entered
+        const [userResponse, repoResponse] = await Promise.all([
+            fetch(`https://api.github.com/users/${encodeURIComponent(username)}`),
+            fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=10`)
+        ]);
 
-const [userResponse, repoResponse] = await Promise.all([
-    fetch(`https://api.github.com/users/${username}`),
-    fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`)
-]);
+        // Check if user exists
+        if (userResponse.status === 404) {
+            throw new Error("GitHub user not found. Check the username.");
+        }
 
-if (!userResponse.ok) {
-    throw new Error("User not found");
-}
+        if (!userResponse.ok) {
+            throw new Error("Unable to fetch user. Try again.");
+        }
 
-const user = await userResponse.json();
-const repositories = await repoResponse.json();
-avatar.src = user.avatar_url;
-name.textContent = user.name || user.login;
-bio.textContent = user.bio || "No bio available";
+        if (!repoResponse.ok) {
+            throw new Error("Unable to fetch repositories.");
+        }
 
-repos.textContent = user.public_repos;
-followers.textContent = user.followers;
-following.textContent = user.following;
-repoList.innerHTML = "";
+        const user = await userResponse.json();
+        const repositories = await repoResponse.json();
 
-repositories.forEach(repo => {
-    const li = document.createElement("li");
+        // Display profile
+        avatar.src = user.avatar_url;
+        name.textContent = user.name || user.login;
 
-    li.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>`;
+        // Clear previous repositories
+        repoList.innerHTML = "";
 
-    repoList.appendChild(li);
-});
-profile.hidden = false;
-loading.hidden = true;
+        // Display repositories
+        if (repositories.length === 0) {
+            repoList.textContent = "No public repositories found.";
+        } else {
+            repositories.forEach(repo => {
+                const li = document.createElement("li");
+                const link = document.createElement("a");
+
+                link.href = repo.html_url;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = repo.name;
+
+                li.appendChild(link);
+                repoList.appendChild(li);
+            });
+        }
+
+        profile.hidden = false;
+
     } catch (error) {
         errorMessage.textContent = error.message;
     } finally {
         loading.hidden = true;
     }
 }
-searchForm.addEventListener("submit", function(event) {
 
+// Listen for form submission
+searchForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const username = usernameInput.value.trim();
@@ -63,5 +79,4 @@ searchForm.addEventListener("submit", function(event) {
     if (username) {
         searchUser(username);
     }
-
 });
